@@ -7,3 +7,7 @@
   - 壁纸下载（todo）
 
 ## 支持H5、微信小程序、抖音小程序
+
+
+## 微信小程序体验版：
+![mp-weixin](/common/images/qrcode.jpg)

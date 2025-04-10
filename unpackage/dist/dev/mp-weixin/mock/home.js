@@ -3,11 +3,11 @@ const common_assets = require("../common/assets.js");
 const imgList = [
   {
     classify: "未来科技",
-    img: "http://gips3.baidu.com/it/u=100751361,1567855012&fm=3028&app=3028&f=JPEG&fmt=auto?w=960&h=1280"
+    img: "https://gips3.baidu.com/it/u=100751361,1567855012&fm=3028&app=3028&f=JPEG&fmt=auto?w=960&h=1280"
   },
   {
     classify: "萌宠生活",
-    img: "http://gips1.baidu.com/it/u=3874647369,3220417986&fm=3028&app=3028&f=JPEG&fmt=auto?w=720&h=1280"
+    img: "https://gips1.baidu.com/it/u=3874647369,3220417986&fm=3028&app=3028&f=JPEG&fmt=auto?w=720&h=1280"
   },
   {
     classify: "中国风",
@@ -15,23 +15,23 @@ const imgList = [
   },
   {
     classify: "萌宠生活",
-    img: "http://gips0.baidu.com/it/u=3822353666,2757632348&fm=3028&app=3028&f=JPEG&fmt=auto?w=720&h=1280"
+    img: "https://gips0.baidu.com/it/u=3822353666,2757632348&fm=3028&app=3028&f=JPEG&fmt=auto?w=720&h=1280"
   },
   {
     classify: "中国风",
-    img: "http://gips2.baidu.com/it/u=1757244148,2197425658&fm=3028&app=3028&f=JPEG&fmt=auto?w=1440&h=2560"
+    img: "https://gips2.baidu.com/it/u=1757244148,2197425658&fm=3028&app=3028&f=JPEG&fmt=auto?w=1440&h=2560"
   },
   {
     classify: "萌宠生活",
-    img: "http://gips1.baidu.com/it/u=1410005327,4082018016&fm=3028&app=3028&f=JPEG&fmt=auto?w=960&h=1280"
+    img: "https://gips1.baidu.com/it/u=1410005327,4082018016&fm=3028&app=3028&f=JPEG&fmt=auto?w=960&h=1280"
   },
   {
     classify: "萌宠生活",
-    img: "http://gips3.baidu.com/it/u=1022347589,1106887837&fm=3028&app=3028&f=JPEG&fmt=auto?w=960&h=1280"
+    img: "https://gips3.baidu.com/it/u=1022347589,1106887837&fm=3028&app=3028&f=JPEG&fmt=auto?w=960&h=1280"
   },
   {
     classify: "太空探索",
-    img: "http://gips3.baidu.com/it/u=4283915297,3700662292&fm=3028&app=3028&f=JPEG&fmt=auto?w=1440&h=2560"
+    img: "https://gips3.baidu.com/it/u=4283915297,3700662292&fm=3028&app=3028&f=JPEG&fmt=auto?w=1440&h=2560"
   }
 ];
 const getBannerList = () => {
@@ -80,8 +80,30 @@ const getPopularPapers = () => {
     }, 1e3);
   });
 };
+const getPreviewPapers = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(Array.from(imgList).map((val, index) => ({
+        id: index + 1,
+        ...val
+      })));
+    }, 1e3);
+  });
+};
+const getClassifyPapers = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(Array.from(imgList).map((val, index) => ({
+        id: index + 1,
+        ...val
+      })));
+    }, 1e3);
+  });
+};
 exports.getBannerList = getBannerList;
+exports.getClassifyPapers = getClassifyPapers;
 exports.getDailyRecommendPapers = getDailyRecommendPapers;
 exports.getNoticeList = getNoticeList;
 exports.getPopularPapers = getPopularPapers;
+exports.getPreviewPapers = getPreviewPapers;
 //# sourceMappingURL=../../.sourcemap/mp-weixin/mock/home.js.map

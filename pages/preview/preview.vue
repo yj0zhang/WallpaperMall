@@ -1,8 +1,8 @@
 <template>
 	<view class="preview">
 		<swiper circular>
-			<swiper-item v-for="item in 5">
-				<image @click="maskChange" src="../../common/images/preview1.jpg" mode="aspectFill"></image>
+			<swiper-item v-for="item in paperList" :key="item.id">
+				<image @click="maskChange" :src="item.img" mode="aspectFill"></image>
 			</swiper-item>
 		</swiper>
 		<view class="mask" v-if="maskState">
@@ -12,7 +12,7 @@
 				<uni-icons type="back" size="18"></uni-icons>
 			</view>
 			<view class="count">
-				3 / 9
+				3 / {{paperList.length}}
 			</view>
 			<view class="time">
 				<uni-dateformat :date="Date.now()" format="hh:mm"></uni-dateformat>
@@ -103,6 +103,13 @@
 <script setup>
 import { ref } from 'vue';
 import {getStatusBarHeight} from '../../utils/systemInfo.js';
+import { getPreviewPapers } from '../../mock/home.js';
+
+const paperList = ref([])
+const getPreviewList = async () => {
+	paperList.value = await getPreviewPapers()
+}
+getPreviewList();
 
 // 壁纸遮罩
 const maskState = ref(true);

@@ -1,15 +1,21 @@
 <template>
 	<view class="classList">
 		<view class="content">
-			<navigator url="/pages/preview/preview" class="item" v-for="item in 10">
-				<image src="/common/images/preview2.jpg" mode="aspectFill"></image>
+			<navigator url="/pages/preview/preview" class="item" v-for="item in paperList" :key="item.id">
+				<image :src="item.img" mode="aspectFill"></image>
 			</navigator>
 		</view>
 	</view>
 </template>
 
 <script setup>
-	
+import { ref } from 'vue';
+import { getClassifyPapers } from '../../mock/home.js';
+
+const paperList = ref([])
+const getPreviewList = async () => {
+	paperList.value = await getClassifyPapers()
+}
 </script>
 
 <style lang="scss" scoped>

@@ -1,7 +1,7 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
-const common_assets = require("../../common/assets.js");
 const utils_systemInfo = require("../../utils/systemInfo.js");
+const mock_home = require("../../mock/home.js");
 if (!Array) {
   const _easycom_uni_icons2 = common_vendor.resolveComponent("uni-icons");
   const _easycom_uni_dateformat2 = common_vendor.resolveComponent("uni-dateformat");
@@ -19,6 +19,11 @@ if (!Math) {
 const _sfc_main = {
   __name: "preview",
   setup(__props) {
+    const paperList = common_vendor.ref([]);
+    const getPreviewList = async () => {
+      paperList.value = await mock_home.getPreviewPapers();
+    };
+    getPreviewList();
     const maskState = common_vendor.ref(true);
     const maskChange = () => {
       maskState.value = !maskState.value;
@@ -48,55 +53,58 @@ const _sfc_main = {
     const userScore = common_vendor.ref(0);
     const submitScore = () => {
       scorePopup.value.close();
-      common_vendor.index.__f__("log", "at pages/preview/preview.vue:143", userScore.value);
+      common_vendor.index.__f__("log", "at pages/preview/preview.vue:150", userScore.value);
     };
     const goBack = () => {
       common_vendor.index.navigateBack();
     };
     return (_ctx, _cache) => {
       return common_vendor.e({
-        a: common_vendor.f(5, (item, k0, i0) => {
-          return {};
+        a: common_vendor.f(paperList.value, (item, k0, i0) => {
+          return {
+            a: common_vendor.o(maskChange, item.id),
+            b: item.img,
+            c: item.id
+          };
         }),
-        b: common_vendor.o(maskChange),
-        c: common_assets._imports_0$2,
-        d: maskState.value
+        b: maskState.value
       }, maskState.value ? {
-        e: common_vendor.p({
+        c: common_vendor.p({
           type: "back",
           size: "18"
         }),
-        f: common_vendor.o(goBack),
-        g: common_vendor.unref(utils_systemInfo.getStatusBarHeight)() + "px",
-        h: common_vendor.p({
+        d: common_vendor.o(goBack),
+        e: common_vendor.unref(utils_systemInfo.getStatusBarHeight)() + "px",
+        f: common_vendor.t(paperList.value.length),
+        g: common_vendor.p({
           date: Date.now(),
           format: "hh:mm"
         }),
-        i: common_vendor.p({
+        h: common_vendor.p({
           date: Date.now(),
           format: "MM月dd日"
         }),
-        j: common_vendor.p({
+        i: common_vendor.p({
           type: "info",
           size: "28"
         }),
-        k: common_vendor.o(clickInfo),
-        l: common_vendor.p({
+        j: common_vendor.o(clickInfo),
+        k: common_vendor.p({
           type: "star",
           size: "28"
         }),
-        m: common_vendor.o(clickScore),
-        n: common_vendor.p({
+        l: common_vendor.o(clickScore),
+        m: common_vendor.p({
           type: "download",
           size: "24"
         })
       } : {}, {
-        o: common_vendor.p({
+        n: common_vendor.p({
           type: "closeempty",
           size: "18"
         }),
-        p: common_vendor.o(clickInfoClose),
-        q: common_vendor.f(infoList.value, (item, k0, i0) => {
+        o: common_vendor.o(clickInfoClose),
+        p: common_vendor.f(infoList.value, (item, k0, i0) => {
           return common_vendor.e({
             a: common_vendor.t(item.label),
             b: item.isRate
@@ -119,30 +127,30 @@ const _sfc_main = {
             h: item.id
           });
         }),
-        r: common_vendor.sr(infoPopup, "2dad6c07-6", {
+        q: common_vendor.sr(infoPopup, "2dad6c07-6", {
           "k": "infoPopup"
         }),
-        s: common_vendor.p({
+        r: common_vendor.p({
           type: "bottom"
         }),
-        t: common_vendor.p({
+        s: common_vendor.p({
           type: "closeempty",
           size: "18"
         }),
-        v: common_vendor.o(clickScoreClose),
-        w: common_vendor.o(($event) => userScore.value = $event),
-        x: common_vendor.p({
+        t: common_vendor.o(clickScoreClose),
+        v: common_vendor.o(($event) => userScore.value = $event),
+        w: common_vendor.p({
           max: 5,
           ["allow-half"]: true,
           modelValue: userScore.value
         }),
-        y: common_vendor.t(userScore.value),
-        z: common_vendor.o(submitScore),
-        A: !userScore.value,
-        B: common_vendor.sr(scorePopup, "2dad6c07-9", {
+        x: common_vendor.t(userScore.value),
+        y: common_vendor.o(submitScore),
+        z: !userScore.value,
+        A: common_vendor.sr(scorePopup, "2dad6c07-9", {
           "k": "scorePopup"
         }),
-        C: common_vendor.p({
+        B: common_vendor.p({
           ["is-mask-click"]: false
         })
       });

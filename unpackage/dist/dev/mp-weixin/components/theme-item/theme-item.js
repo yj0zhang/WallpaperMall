@@ -33,7 +33,7 @@ const _sfc_main = {
         b: __props.src,
         c: common_vendor.t(__props.classify)
       } : {
-        d: common_assets._imports_0$3,
+        d: common_assets._imports_0$1,
         e: common_vendor.p({
           type: "more-filled",
           size: "34",

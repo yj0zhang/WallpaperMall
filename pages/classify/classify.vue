@@ -1,14 +1,21 @@
 <template>
 	<view class="classLayout pageBg">
-		<custom-nav-bar :title="分类"></custom-nav-bar>
+		<custom-nav-bar title="分类"></custom-nav-bar>
 		<view class="classify">
-			<theme-item v-for="item in 15"></theme-item>
+			<theme-item v-for="item in paperList" :key="item.id" :src="item.img" :classify="item.classify"></theme-item>
 		</view>
 	</view>
 </template>
 
 <script setup>
-	
+import { ref } from 'vue';
+import { getClassifyPapers } from '../../mock/home.js';
+
+const paperList = ref([]);
+const getPreviewList = async () => {
+	paperList.value = await getClassifyPapers();
+}
+getPreviewList();
 </script>
 
 <style lang="scss" scoped>

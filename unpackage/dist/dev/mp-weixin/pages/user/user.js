@@ -30,7 +30,7 @@ const _sfc_main = {
     };
     return (_ctx, _cache) => {
       return {
-        a: common_assets._imports_0$1,
+        a: common_assets._imports_0,
         b: common_vendor.f(list1.value, (item, k0, i0) => {
           return common_vendor.e({
             a: "0f7520f0-0-" + i0,

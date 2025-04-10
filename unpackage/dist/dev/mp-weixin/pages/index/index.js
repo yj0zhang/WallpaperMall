@@ -1,6 +1,6 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
-const common_assets = require("../../common/assets.js");
+const mock_home = require("../../mock/home.js");
 if (!Array) {
   const _easycom_custom_nav_bar2 = common_vendor.resolveComponent("custom-nav-bar");
   const _easycom_uni_icons2 = common_vendor.resolveComponent("uni-icons");
@@ -20,17 +20,31 @@ if (!Math) {
 const _sfc_main = {
   __name: "index",
   setup(__props) {
-    const banners = common_vendor.ref([
-      { id: 1, img: common_assets.b1 },
-      { id: 2, img: common_assets.b2 },
-      { id: 3, img: common_assets.b3 }
-    ]);
-    const notices = common_vendor.ref([
-      { id: 1, content: "这是第一个公告很长很长很长很长很长很长很长很长很长" },
-      { id: 2, content: "这是第二个公告很长很长很长很长很长很长很长很长很长" },
-      { id: 3, content: "这是第三个公告很长很长很长很长很长很长很长很长很长" },
-      { id: 4, content: "这是第四个公告很长很长很长很长很长很长很长很长很长" }
-    ]);
+    const banners = common_vendor.ref([]);
+    const getBanner = async () => {
+      banners.value = await mock_home.getBannerList();
+    };
+    getBanner();
+    const notices = common_vendor.ref([]);
+    const getNotices = async () => {
+      notices.value = await mock_home.getNoticeList();
+    };
+    getNotices();
+    const dailyRecommendList = common_vendor.ref([]);
+    const getDailyRecommendList = async () => {
+      dailyRecommendList.value = await mock_home.getDailyRecommendPapers();
+    };
+    getDailyRecommendList();
+    const popularPapers = common_vendor.ref([]);
+    const getPopularPaperList = async () => {
+      popularPapers.value = await mock_home.getPopularPapers();
+    };
+    getPopularPaperList();
+    const gotoDetail = (item) => {
+      common_vendor.index.navigateTo({
+        url: "/pages/notice/detail"
+      });
+    };
     const goPreview = (item) => {
       common_vendor.index.navigateTo({
         url: "/pages/preview/preview"
@@ -54,7 +68,8 @@ const _sfc_main = {
         d: common_vendor.f(notices.value, (item, k0, i0) => {
           return {
             a: common_vendor.t(item.content),
-            b: item.id
+            b: item.id,
+            c: common_vendor.o(($event) => gotoDetail(), item.id)
           };
         }),
         e: common_vendor.p({
@@ -70,18 +85,23 @@ const _sfc_main = {
           date: Date.now(),
           format: "dd号"
         }),
-        h: common_vendor.f(8, (item, k0, i0) => {
+        h: common_vendor.f(dailyRecommendList.value, (item, k0, i0) => {
           return {
-            a: common_vendor.o(($event) => goPreview())
+            a: item.img,
+            b: common_vendor.o(($event) => goPreview())
           };
         }),
-        i: common_assets._imports_0,
-        j: common_vendor.f(8, (item, k0, i0) => {
+        i: common_vendor.f(popularPapers.value, (item, k0, i0) => {
           return {
-            a: "1cf27b2a-7-" + i0
+            a: item.id,
+            b: "1cf27b2a-7-" + i0,
+            c: common_vendor.p({
+              src: item.img,
+              classify: item.classify
+            })
           };
         }),
-        k: common_vendor.p({
+        j: common_vendor.p({
           isMore: true
         })
       };

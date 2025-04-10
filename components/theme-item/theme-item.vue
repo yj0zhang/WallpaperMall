@@ -1,9 +1,9 @@
 <template>
 	<view class="themeItem">
 		<navigator url="/pages/preview/preview" class="box" v-if="!isMore">
-			<image class="pic" src="../../common/images/classify1.jpg" mode="aspectFill"></image>
+			<image class="pic" :src="src" mode="aspectFill"></image>
 			<view class="mask">
-				明星美女
+				{{classify}}
 			</view>
 			<view class="tab">
 				3天前更新
@@ -26,6 +26,14 @@
 		isMore: {
 			type: Boolean,
 			default: false,
+		},
+		src: {
+			type: String,
+			default: '',
+		},
+		classify: {
+			type: String,
+			default: '',
 		}
 	})
 </script>

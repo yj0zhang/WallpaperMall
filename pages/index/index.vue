@@ -25,8 +25,8 @@
 					interval="1500"
 					duration="300"
 					circular>
-					<swiper-item v-for="item in notices" :key="item.id">
-						<navigator url="/pages/notice/detail">{{item.content}}</navigator>
+					<swiper-item v-for="item in notices" :key="item.id" @click="gotoDetail(item)">
+						{{item.content}}
 					</swiper-item>
 				</swiper>
 			</view>
@@ -50,8 +50,8 @@
 			</common-title>
 			<view class="content">
 				<scroll-view scroll-x >
-					<view class="box" v-for="item in 8" @click="goPreview(item)">
-						<image src="../../common/images/preview_small.webp" mode="aspectFill"></image>
+					<view class="box" v-for="item in dailyRecommendList" @click="goPreview(item)">
+						<image :src="item.img" mode="aspectFill"></image>
 					</view>
 				</scroll-view>
 			</view>
@@ -66,7 +66,7 @@
 				</template>
 			</common-title>
 			<view class="content">
-				<theme-item v-for="item in 8"></theme-item>
+				<theme-item v-for="item in popularPapers" :key="item.id" :src="item.img" :classify="item.classify"></theme-item>
 				<theme-item isMore></theme-item>
 			</view>
 		</view>
@@ -74,26 +74,45 @@
 </template>
 
 <script setup>
-	import {ref} from 'vue';
-	import b1 from '../../common/images/banner1.jpg';
-	import b2 from '../../common/images/banner2.jpg';
-	import b3 from '../../common/images/banner3.jpg';
-	const banners = ref([
-		{id:1,img: b1},
-		{id:2,img: b2},
-		{id:3,img: b3},
-	]);
-	const notices = ref([
-		{id:1, content: '这是第一个公告很长很长很长很长很长很长很长很长很长'},
-		{id:2, content: '这是第二个公告很长很长很长很长很长很长很长很长很长'},
-		{id:3, content: '这是第三个公告很长很长很长很长很长很长很长很长很长'},
-		{id:4, content: '这是第四个公告很长很长很长很长很长很长很长很长很长'},
-	])
-	const goPreview = item => {
-		uni.navigateTo({
-			url:"/pages/preview/preview"
-		})
-	}
+import {ref} from 'vue';
+import { getBannerList, getDailyRecommendPapers, getNoticeList, getPopularPapers } from '../../mock/home';
+
+const banners = ref([]);
+const getBanner = async () => {
+	banners.value = await getBannerList();
+};
+getBanner();
+
+
+const notices = ref([]);
+const getNotices = async () => {
+	notices.value = await getNoticeList();
+}
+getNotices();
+
+const dailyRecommendList = ref([]);
+const getDailyRecommendList = async () => {
+	dailyRecommendList.value = await getDailyRecommendPapers();
+}
+getDailyRecommendList();
+
+const popularPapers = ref([]);
+const getPopularPaperList = async () => {
+	popularPapers.value = await getPopularPapers();
+}
+getPopularPaperList();
+
+const gotoDetail = item => {
+	uni.navigateTo({
+		url:'/pages/notice/detail'
+	})
+}
+
+const goPreview = item => {
+	uni.navigateTo({
+		url:"/pages/preview/preview"
+	})
+}
 </script>
 
 <style lang="scss" scoped>

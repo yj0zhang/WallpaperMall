@@ -1,6 +1,6 @@
 <template>
 	<view class="themeItem">
-		<navigator url="/pages/classList/classList" class="box" v-if="!isMore">
+		<navigator url="/pages/preview/preview" class="box" v-if="!isMore">
 			<image class="pic" src="../../common/images/classify1.jpg" mode="aspectFill"></image>
 			<view class="mask">
 				明星美女

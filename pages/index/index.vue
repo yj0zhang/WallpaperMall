@@ -1,5 +1,6 @@
 <template>
 	<view class="homeLayout pageBg">
+		<custom-nav-bar title="推荐"></custom-nav-bar>
 		<view class="banner">
 			<swiper
 				indicator-dots
@@ -25,7 +26,7 @@
 					duration="300"
 					circular>
 					<swiper-item v-for="item in notices" :key="item.id">
-						{{item.content}}
+						<navigator url="/pages/notice/detail">{{item.content}}</navigator>
 					</swiper-item>
 				</swiper>
 			</view>
@@ -49,7 +50,7 @@
 			</common-title>
 			<view class="content">
 				<scroll-view scroll-x >
-					<view class="box" v-for="item in 8">
+					<view class="box" v-for="item in 8" @click="goPreview(item)">
 						<image src="../../common/images/preview_small.webp" mode="aspectFill"></image>
 					</view>
 				</scroll-view>
@@ -88,6 +89,11 @@
 		{id:3, content: '这是第三个公告很长很长很长很长很长很长很长很长很长'},
 		{id:4, content: '这是第四个公告很长很长很长很长很长很长很长很长很长'},
 	])
+	const goPreview = item => {
+		uni.navigateTo({
+			url:"/pages/preview/preview"
+		})
+	}
 </script>
 
 <style lang="scss" scoped>

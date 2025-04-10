@@ -1,0 +1,1 @@
+{"version":3,"file":"user.js","sources":["pages/user/user.vue?type=page"],"sourcesContent":["import MiniProgramPage from '/Users/zhangyujie/Documents/HBuilderProjects/WallpaperMall/pages/user/user.vue'\ntt.createPage(MiniProgramPage)"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AACA,GAAG,WAAW,eAAe;"}

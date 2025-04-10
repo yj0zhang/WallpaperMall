@@ -13,7 +13,8 @@
 		</view>
 		<view class="section">
 			<view class="list">
-				<view class="row" v-for="item in list1" :key="item.id">
+				<view class="row" v-for="item in list1" :key="item.id"
+					@click="navigateTo(item)">
 					<view class="left">
 						<uni-icons :type="item.icon" size="20"></uni-icons>
 						<view class="text">
@@ -33,7 +34,7 @@
 					>联系客服</button>
 					<!-- #endif -->
 					<!-- #ifndef MP -->
-					<button @click="clickContact" class="contact">拨打电话</button>
+					<button v-if="item.isCustomerService" @click="clickContact" class="contact">拨打电话</button>
 					<!-- #endif -->
 				</view>
 			</view>
@@ -77,6 +78,13 @@ import { ref } from 'vue';
 			phoneNumber:"114"
 		})
 	}
+	const navigateTo = item => {
+		if(!item.isCustomerService) {
+			uni.navigateTo({
+				url:"/pages/classList/classList"
+			})
+		}
+	}
 </script>
 
 <style lang="scss" scoped>
@@ -104,13 +112,13 @@ import { ref } from 'vue';
 		}
 		.address{
 			font-size: 28rpx;
-			color: $text-font-color-3;
+			color: $text-font-color-4;
 		}
 	}
 	.section{
 		width: 690rpx;
 		margin: 50rpx auto;
-		border: 1px solid $text-font-color-4;
+		border: 1px solid $text-font-color-5;
 		border-radius: 10rpx;
 		box-shadow: 0 0 30rpx $light-black;
 		.list{
@@ -120,7 +128,7 @@ import { ref } from 'vue';
 				justify-content: space-between;
 				padding: 0 30rpx;
 				height: 100rpx;
-				border-bottom: 1px solid $text-font-color-4;
+				border-bottom: 1px solid $text-font-color-5;
 				position: relative;
 				background-color: $white-color;
 				&:last-child{
@@ -136,7 +144,7 @@ import { ref } from 'vue';
 				}
 				.right .text {
 					font-size: 28rpx;
-					color: $text-font-color-3;
+					color: $text-font-color-4;
 				}
 				.contact {
 					position: absolute;

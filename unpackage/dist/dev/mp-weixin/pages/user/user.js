@@ -21,6 +21,13 @@ const _sfc_main = {
       { id: 1, name: "订阅更新", icon: "notification-filled" },
       { id: 2, name: "常见问题", icon: "flag-filled" }
     ]);
+    const navigateTo = (item) => {
+      if (!item.isCustomerService) {
+        common_vendor.index.navigateTo({
+          url: "/pages/classList/classList"
+        });
+      }
+    };
     return (_ctx, _cache) => {
       return {
         a: common_assets._imports_0$1,
@@ -36,7 +43,8 @@ const _sfc_main = {
             e: "0f7520f0-1-" + i0,
             f: item.isCustomerService
           }, item.isCustomerService ? {} : {}, {
-            g: item.id
+            g: item.id,
+            h: common_vendor.o(($event) => navigateTo(item), item.id)
           });
         }),
         c: common_vendor.p({

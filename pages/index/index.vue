@@ -198,7 +198,7 @@
 			padding-top: 50rpx;
 			.more{
 				font-size: 32rpx;
-				color: $text-font-color-3;
+				color: $text-font-color-4;
 			}
 			.content {
 				margin-top: 30rpx;

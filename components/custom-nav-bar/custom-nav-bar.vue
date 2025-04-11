@@ -9,10 +9,10 @@
 				<view class="title">
 					{{title}}
 				</view>
-				<view class="search">
+				<navigator url="/pages/search/search" class="search">
 					<uni-icons class="icon" type="search" size="18"></uni-icons>
 					<text class="text">搜索</text>
-				</view>
+				</navigator>
 			</view>
 		</view>
 		<view class="fill" :style="{height: getNavBarHeight()+'px'}"></view>

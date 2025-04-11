@@ -8168,6 +8168,7 @@ const createSubpackageApp = initCreateSubpackageApp();
 const createHook = (lifecycle) => (hook, target = getCurrentInstance()) => {
   !isInSSRComponentSetup && injectHook(lifecycle, hook, target);
 };
+const onUnload = /* @__PURE__ */ createHook(ON_UNLOAD);
 const onReachBottom = /* @__PURE__ */ createHook(ON_REACH_BOTTOM);
 exports._export_sfc = _export_sfc;
 exports.computed = computed;
@@ -8179,6 +8180,7 @@ exports.initVueI18n = initVueI18n;
 exports.n = n;
 exports.o = o;
 exports.onReachBottom = onReachBottom;
+exports.onUnload = onUnload;
 exports.p = p;
 exports.ref = ref;
 exports.resolveComponent = resolveComponent;

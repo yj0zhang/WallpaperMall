@@ -157,7 +157,7 @@ const goBack = () => {
 
 const currentIndex = ref(0);
 const currentPaper = computed(() => {
-	return paperList[currentIndex.value]
+	return paperList.value[currentIndex.value]
 });
 const paperChange = (e) => {
 	currentIndex.value = e.detail.current;
@@ -172,47 +172,60 @@ const downloadPaper = () => {
 	// #endif
 	// #ifndef H5
 	try {
-		uni.saveImageToPhotosAlbum({
-			filePath:currentPaper.img,
-			success() {
-				uni.showToast({
-					title: '保存成功，请到相册查看',
-					icon:'none'
-				})
-			},
-			fail(err) {
-				if(err.errMsg === 'saveImageToPhotosAlbum:fail cancel') {
-					uni.showToast({
-						title: '保存失败，请重新点击下载',
-						icon: "none"
-					})
-					return;
-				}
-				uni.showModal({
-					title:'授权提示',
-					content:'需要相册保存权限',
-					success(res) {
-						if(res.confirm) {
-							uni.openSetting({
-								success(setting) {
-									if(setting.authSetting['scope.writePhotosAlbum']) {
-										uni.showToast({
-											title: '获取授权成功',
-											icon: 'none'
-										})
-									} else {
-										uni.showToast({
-											title: '获取权限失败',
-											icon: 'none'
+		uni.downloadFile({
+			url: currentPaper.value.img,
+			success(res) {
+				if(res.statusCode === 200) {
+					uni.saveImageToPhotosAlbum({
+						filePath:res.tempFilePath,
+						success() {
+							uni.showToast({
+								title: '保存成功，请到相册查看',
+								icon:'none'
+							})
+						},
+						fail(err) {
+							if(err.errMsg === 'saveImageToPhotosAlbum:fail cancel') {
+								uni.showToast({
+									title: '保存失败，请重新点击下载',
+									icon: "none"
+								})
+								return;
+							}
+							uni.showModal({
+								title:'授权提示',
+								content:'需要相册保存权限',
+								success(res) {
+									if(res.confirm) {
+										uni.openSetting({
+											success(setting) {
+												if(setting.authSetting['scope.writePhotosAlbum']) {
+													uni.showToast({
+														title: '获取授权成功',
+														icon: 'none'
+													})
+												} else {
+													uni.showToast({
+														title: '获取权限失败',
+														icon: 'none'
+													})
+												}
+											}
 										})
 									}
 								}
 							})
 						}
-					}
+					})
+				}
+			},
+			fail() {
+				uni.showToast({
+					title:'下载失败',
+					icon:'none'
 				})
 			}
-		})
+		});
 	} catch (error) {
 		//TODO handle the exception
 	}

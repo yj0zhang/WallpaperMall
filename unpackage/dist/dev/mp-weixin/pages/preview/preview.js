@@ -60,51 +60,64 @@ const _sfc_main = {
     };
     const currentIndex = common_vendor.ref(0);
     const currentPaper = common_vendor.computed(() => {
-      return paperList[currentIndex.value];
+      return paperList.value[currentIndex.value];
     });
     const paperChange = (e) => {
       currentIndex.value = e.detail.current;
     };
     const downloadPaper = () => {
       try {
-        common_vendor.index.saveImageToPhotosAlbum({
-          filePath: currentPaper.img,
-          success() {
-            common_vendor.index.showToast({
-              title: "保存成功，请到相册查看",
-              icon: "none"
-            });
-          },
-          fail(err) {
-            if (err.errMsg === "saveImageToPhotosAlbum:fail cancel") {
-              common_vendor.index.showToast({
-                title: "保存失败，请重新点击下载",
-                icon: "none"
-              });
-              return;
-            }
-            common_vendor.index.showModal({
-              title: "授权提示",
-              content: "需要相册保存权限",
-              success(res) {
-                if (res.confirm) {
-                  common_vendor.index.openSetting({
-                    success(setting) {
-                      if (setting.authSetting["scope.writePhotosAlbum"]) {
-                        common_vendor.index.showToast({
-                          title: "获取授权成功",
-                          icon: "none"
-                        });
-                      } else {
-                        common_vendor.index.showToast({
-                          title: "获取权限失败",
-                          icon: "none"
+        common_vendor.index.downloadFile({
+          url: currentPaper.value.img,
+          success(res) {
+            if (res.statusCode === 200) {
+              common_vendor.index.saveImageToPhotosAlbum({
+                filePath: res.tempFilePath,
+                success() {
+                  common_vendor.index.showToast({
+                    title: "保存成功，请到相册查看",
+                    icon: "none"
+                  });
+                },
+                fail(err) {
+                  if (err.errMsg === "saveImageToPhotosAlbum:fail cancel") {
+                    common_vendor.index.showToast({
+                      title: "保存失败，请重新点击下载",
+                      icon: "none"
+                    });
+                    return;
+                  }
+                  common_vendor.index.showModal({
+                    title: "授权提示",
+                    content: "需要相册保存权限",
+                    success(res2) {
+                      if (res2.confirm) {
+                        common_vendor.index.openSetting({
+                          success(setting) {
+                            if (setting.authSetting["scope.writePhotosAlbum"]) {
+                              common_vendor.index.showToast({
+                                title: "获取授权成功",
+                                icon: "none"
+                              });
+                            } else {
+                              common_vendor.index.showToast({
+                                title: "获取权限失败",
+                                icon: "none"
+                              });
+                            }
+                          }
                         });
                       }
                     }
                   });
                 }
-              }
+              });
+            }
+          },
+          fail() {
+            common_vendor.index.showToast({
+              title: "下载失败",
+              icon: "none"
             });
           }
         });

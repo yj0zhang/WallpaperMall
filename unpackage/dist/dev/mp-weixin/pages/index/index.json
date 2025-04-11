@@ -6,6 +6,7 @@
     "uni-icons": "../../uni_modules/uni-icons/components/uni-icons/uni-icons",
     "uni-dateformat": "../../uni_modules/uni-dateformat/components/uni-dateformat/uni-dateformat",
     "common-title": "../../components/common-title/common-title",
+    "uv-skeletons": "../../uni_modules/uv-skeletons/components/uv-skeletons/uv-skeletons",
     "theme-item": "../../components/theme-item/theme-item"
   }
 }

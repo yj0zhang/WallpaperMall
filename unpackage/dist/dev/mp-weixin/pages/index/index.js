@@ -6,16 +6,18 @@ if (!Array) {
   const _easycom_uni_icons2 = common_vendor.resolveComponent("uni-icons");
   const _easycom_uni_dateformat2 = common_vendor.resolveComponent("uni-dateformat");
   const _easycom_common_title2 = common_vendor.resolveComponent("common-title");
+  const _easycom_uv_skeletons2 = common_vendor.resolveComponent("uv-skeletons");
   const _easycom_theme_item2 = common_vendor.resolveComponent("theme-item");
-  (_easycom_custom_nav_bar2 + _easycom_uni_icons2 + _easycom_uni_dateformat2 + _easycom_common_title2 + _easycom_theme_item2)();
+  (_easycom_custom_nav_bar2 + _easycom_uni_icons2 + _easycom_uni_dateformat2 + _easycom_common_title2 + _easycom_uv_skeletons2 + _easycom_theme_item2)();
 }
 const _easycom_custom_nav_bar = () => "../../components/custom-nav-bar/custom-nav-bar.js";
 const _easycom_uni_icons = () => "../../uni_modules/uni-icons/components/uni-icons/uni-icons.js";
 const _easycom_uni_dateformat = () => "../../uni_modules/uni-dateformat/components/uni-dateformat/uni-dateformat.js";
 const _easycom_common_title = () => "../../components/common-title/common-title.js";
+const _easycom_uv_skeletons = () => "../../uni_modules/uv-skeletons/components/uv-skeletons/uv-skeletons.js";
 const _easycom_theme_item = () => "../../components/theme-item/theme-item.js";
 if (!Math) {
-  (_easycom_custom_nav_bar + _easycom_uni_icons + _easycom_uni_dateformat + _easycom_common_title + _easycom_theme_item)();
+  (_easycom_custom_nav_bar + _easycom_uni_icons + _easycom_uni_dateformat + _easycom_common_title + _easycom_uv_skeletons + _easycom_theme_item)();
 }
 const _sfc_main = {
   __name: "index",
@@ -33,6 +35,7 @@ const _sfc_main = {
     const dailyRecommendList = common_vendor.ref([]);
     const getDailyRecommendList = async () => {
       dailyRecommendList.value = await mock_home.getDailyRecommendPapers();
+      skeletonLoading.value = false;
     };
     getDailyRecommendList();
     const popularPapers = common_vendor.ref([]);
@@ -50,6 +53,25 @@ const _sfc_main = {
         url: "/pages/preview/preview"
       });
     };
+    const skeletonLoading = common_vendor.ref(true);
+    const recommendSkeleton = common_vendor.ref([
+      {
+        type: "flex",
+        children: [{
+          type: "custom",
+          style: "width:200rpx;height:430rpx;"
+        }, {
+          type: "custom",
+          style: "width:200rpx;height:430rpx;marginLeft:15rpx;"
+        }, {
+          type: "custom",
+          style: "width:200rpx;height:430rpx;marginLeft:15rpx;"
+        }, {
+          type: "custom",
+          style: "width:200rpx;height:430rpx;marginLeft:15rpx;"
+        }]
+      }
+    ]);
     return (_ctx, _cache) => {
       return {
         a: common_vendor.p({
@@ -85,23 +107,28 @@ const _sfc_main = {
           date: Date.now(),
           format: "dd号"
         }),
-        h: common_vendor.f(dailyRecommendList.value, (item, k0, i0) => {
+        h: common_vendor.p({
+          loading: skeletonLoading.value,
+          skeleton: recommendSkeleton.value,
+          animate: true
+        }),
+        i: common_vendor.f(dailyRecommendList.value, (item, k0, i0) => {
           return {
             a: item.img,
             b: common_vendor.o(($event) => goPreview())
           };
         }),
-        i: common_vendor.f(popularPapers.value, (item, k0, i0) => {
+        j: common_vendor.f(popularPapers.value, (item, k0, i0) => {
           return {
             a: item.id,
-            b: "1cf27b2a-7-" + i0,
+            b: "1cf27b2a-8-" + i0,
             c: common_vendor.p({
               src: item.img,
               classify: item.classify
             })
           };
         }),
-        j: common_vendor.p({
+        k: common_vendor.p({
           isMore: true
         })
       };

@@ -50,6 +50,8 @@
 			</common-title>
 			<view class="content">
 				<scroll-view scroll-x >
+					<uv-skeletons :loading="skeletonLoading" :skeleton="recommendSkeleton" animate>
+					</uv-skeletons>
 					<view class="box" v-for="item in dailyRecommendList" @click="goPreview(item)">
 						<image :src="item.img" mode="aspectFill"></image>
 					</view>
@@ -93,6 +95,7 @@ getNotices();
 const dailyRecommendList = ref([]);
 const getDailyRecommendList = async () => {
 	dailyRecommendList.value = await getDailyRecommendPapers();
+	skeletonLoading.value = false;
 }
 getDailyRecommendList();
 
@@ -113,6 +116,26 @@ const goPreview = item => {
 		url:"/pages/preview/preview"
 	})
 }
+
+
+const skeletonLoading = ref(true);
+const recommendSkeleton = ref([{
+		type: 'flex',
+		children: [{
+			type: 'custom',
+			style: 'width:200rpx;height:430rpx;'
+		}, {
+			type: 'custom',
+			style: 'width:200rpx;height:430rpx;marginLeft:15rpx;'
+		}, {
+			type: 'custom',
+			style: 'width:200rpx;height:430rpx;marginLeft:15rpx;'
+		}, {
+			type: 'custom',
+			style: 'width:200rpx;height:430rpx;marginLeft:15rpx;'
+		}]
+	}
+]);
 </script>
 
 <style lang="scss" scoped>

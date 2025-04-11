@@ -5,17 +5,34 @@
 				<image :src="item.img" mode="aspectFill"></image>
 			</navigator>
 		</view>
+		<view class="loadingLayout">
+			<uni-load-more :status="loadingStatus"></uni-load-more>
+		</view>
 	</view>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import { getClassifyPapers } from '../../mock/home.js';
+import { getMyPapers } from '../../mock/home.js';
 
+import { onReachBottom } from "@dcloudio/uni-app"
+
+const loadingStatus = ref('more');
+const page = ref(1);
+const pageSize = 20;
 const paperList = ref([])
-const getPreviewList = async () => {
-	paperList.value = await getClassifyPapers()
+const getMyPaperList = async () => {
+	loadingStatus.value = 'loading';
+	const res = await getMyPapers(page.value, pageSize);
+	loadingStatus.value = res.length < pageSize ? 'noMore':'more';
+	paperList.value = [...paperList.value, ...res];
+	page.value += 1;
 }
+getMyPaperList();
+
+onReachBottom(() => {
+	getMyPaperList();
+})
 </script>
 
 <style lang="scss" scoped>

@@ -1,5 +1,6 @@
 <template>
 	<view class="userLayout pageBg">
+		<view class="barPlaceholder" :style="{height: getNavBarHeight() + 'px'}"></view>
 		<view class="userInfo">
 			<view class="avatar">
 				<image src="../../static/images/xxmLogo.png" mode="aspectFill"></image>
@@ -62,6 +63,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import { getNavBarHeight } from '../../utils/systemInfo.js';
 
 	const list1 = ref([
 		{id:1,name: '我的下载',icon: "download-filled",count:0},

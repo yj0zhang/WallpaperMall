@@ -1,6 +1,7 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
 const common_assets = require("../../common/assets.js");
+const utils_systemInfo = require("../../utils/systemInfo.js");
 if (!Array) {
   const _easycom_uni_icons2 = common_vendor.resolveComponent("uni-icons");
   _easycom_uni_icons2();
@@ -30,8 +31,9 @@ const _sfc_main = {
     };
     return (_ctx, _cache) => {
       return {
-        a: common_assets._imports_0,
-        b: common_vendor.f(list1.value, (item, k0, i0) => {
+        a: common_vendor.unref(utils_systemInfo.getNavBarHeight)() + "px",
+        b: common_assets._imports_0,
+        c: common_vendor.f(list1.value, (item, k0, i0) => {
           return common_vendor.e({
             a: "0f7520f0-0-" + i0,
             b: common_vendor.p({
@@ -47,12 +49,12 @@ const _sfc_main = {
             h: common_vendor.o(($event) => navigateTo(item), item.id)
           });
         }),
-        c: common_vendor.p({
+        d: common_vendor.p({
           type: "right",
           size: "15",
           color: "#aaa"
         }),
-        d: common_vendor.f(list2.value, (item, k0, i0) => {
+        e: common_vendor.f(list2.value, (item, k0, i0) => {
           return {
             a: "0f7520f0-2-" + i0,
             b: common_vendor.p({
@@ -65,7 +67,7 @@ const _sfc_main = {
             f: item.id
           };
         }),
-        e: common_vendor.p({
+        f: common_vendor.p({
           type: "right",
           size: "15",
           color: "#aaa"

@@ -90,6 +90,17 @@ const getPreviewPapers = () => {
     }, 1e3);
   });
 };
+const getMyPapers = (page, pageSize = 20) => {
+  const startIndex = (page - 1) * pageSize;
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(Array.from({ length: pageSize }).map((_, index) => ({
+        id: index + startIndex,
+        ...imgList[index % imgList.length]
+      })));
+    }, 1e3);
+  });
+};
 const getClassifyPapers = () => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -103,6 +114,7 @@ const getClassifyPapers = () => {
 exports.getBannerList = getBannerList;
 exports.getClassifyPapers = getClassifyPapers;
 exports.getDailyRecommendPapers = getDailyRecommendPapers;
+exports.getMyPapers = getMyPapers;
 exports.getNoticeList = getNoticeList;
 exports.getPopularPapers = getPopularPapers;
 exports.getPreviewPapers = getPreviewPapers;

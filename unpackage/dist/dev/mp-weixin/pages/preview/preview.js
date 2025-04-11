@@ -58,6 +58,59 @@ const _sfc_main = {
     const goBack = () => {
       common_vendor.index.navigateBack();
     };
+    const currentIndex = common_vendor.ref(0);
+    const currentPaper = common_vendor.computed(() => {
+      return paperList[currentIndex.value];
+    });
+    const paperChange = (e) => {
+      currentIndex.value = e.detail.current;
+    };
+    const downloadPaper = () => {
+      try {
+        common_vendor.index.saveImageToPhotosAlbum({
+          filePath: currentPaper.img,
+          success() {
+            common_vendor.index.showToast({
+              title: "保存成功，请到相册查看",
+              icon: "none"
+            });
+          },
+          fail(err) {
+            if (err.errMsg === "saveImageToPhotosAlbum:fail cancel") {
+              common_vendor.index.showToast({
+                title: "保存失败，请重新点击下载",
+                icon: "none"
+              });
+              return;
+            }
+            common_vendor.index.showModal({
+              title: "授权提示",
+              content: "需要相册保存权限",
+              success(res) {
+                if (res.confirm) {
+                  common_vendor.index.openSetting({
+                    success(setting) {
+                      if (setting.authSetting["scope.writePhotosAlbum"]) {
+                        common_vendor.index.showToast({
+                          title: "获取授权成功",
+                          icon: "none"
+                        });
+                      } else {
+                        common_vendor.index.showToast({
+                          title: "获取权限失败",
+                          icon: "none"
+                        });
+                      }
+                    }
+                  });
+                }
+              }
+            });
+          }
+        });
+      } catch (error) {
+      }
+    };
     return (_ctx, _cache) => {
       return common_vendor.e({
         a: common_vendor.f(paperList.value, (item, k0, i0) => {
@@ -67,44 +120,48 @@ const _sfc_main = {
             c: item.id
           };
         }),
-        b: maskState.value
+        b: currentIndex.value,
+        c: common_vendor.o(paperChange),
+        d: maskState.value
       }, maskState.value ? {
-        c: common_vendor.p({
+        e: common_vendor.p({
           type: "back",
           size: "18"
         }),
-        d: common_vendor.o(goBack),
-        e: common_vendor.unref(utils_systemInfo.getStatusBarHeight)() + "px",
-        f: common_vendor.t(paperList.value.length),
-        g: common_vendor.p({
+        f: common_vendor.o(goBack),
+        g: common_vendor.unref(utils_systemInfo.getStatusBarHeight)() + "px",
+        h: common_vendor.t(currentIndex.value + 1),
+        i: common_vendor.t(paperList.value.length),
+        j: common_vendor.p({
           date: Date.now(),
           format: "hh:mm"
         }),
-        h: common_vendor.p({
+        k: common_vendor.p({
           date: Date.now(),
           format: "MM月dd日"
         }),
-        i: common_vendor.p({
+        l: common_vendor.p({
           type: "info",
           size: "28"
         }),
-        j: common_vendor.o(clickInfo),
-        k: common_vendor.p({
+        m: common_vendor.o(clickInfo),
+        n: common_vendor.p({
           type: "star",
           size: "28"
         }),
-        l: common_vendor.o(clickScore),
-        m: common_vendor.p({
+        o: common_vendor.o(clickScore),
+        p: common_vendor.p({
           type: "download",
           size: "24"
-        })
+        }),
+        q: common_vendor.o(downloadPaper)
       } : {}, {
-        n: common_vendor.p({
+        r: common_vendor.p({
           type: "closeempty",
           size: "18"
         }),
-        o: common_vendor.o(clickInfoClose),
-        p: common_vendor.f(infoList.value, (item, k0, i0) => {
+        s: common_vendor.o(clickInfoClose),
+        t: common_vendor.f(infoList.value, (item, k0, i0) => {
           return common_vendor.e({
             a: common_vendor.t(item.label),
             b: item.isRate
@@ -127,30 +184,30 @@ const _sfc_main = {
             h: item.id
           });
         }),
-        q: common_vendor.sr(infoPopup, "2dad6c07-6", {
+        v: common_vendor.sr(infoPopup, "2dad6c07-6", {
           "k": "infoPopup"
         }),
-        r: common_vendor.p({
+        w: common_vendor.p({
           type: "bottom"
         }),
-        s: common_vendor.p({
+        x: common_vendor.p({
           type: "closeempty",
           size: "18"
         }),
-        t: common_vendor.o(clickScoreClose),
-        v: common_vendor.o(($event) => userScore.value = $event),
-        w: common_vendor.p({
+        y: common_vendor.o(clickScoreClose),
+        z: common_vendor.o(($event) => userScore.value = $event),
+        A: common_vendor.p({
           max: 5,
           ["allow-half"]: true,
           modelValue: userScore.value
         }),
-        x: common_vendor.t(userScore.value),
-        y: common_vendor.o(submitScore),
-        z: !userScore.value,
-        A: common_vendor.sr(scorePopup, "2dad6c07-9", {
+        B: common_vendor.t(userScore.value),
+        C: common_vendor.o(submitScore),
+        D: !userScore.value,
+        E: common_vendor.sr(scorePopup, "2dad6c07-9", {
           "k": "scorePopup"
         }),
-        B: common_vendor.p({
+        F: common_vendor.p({
           ["is-mask-click"]: false
         })
       });

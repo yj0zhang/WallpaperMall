@@ -105,6 +105,18 @@ export const getPreviewPapers = () => {
 
 
 //查看某个专题的图片
+export const getMyPapers = (page, pageSize = 20) => {
+	const startIndex = (page - 1) * pageSize;
+	return new Promise((resolve, reject) => {
+		setTimeout(() => {
+			resolve(Array.from({length: pageSize}).map((_,index) => ({
+				id: index+startIndex,
+				...imgList[index % imgList.length],
+			})));
+		}, 1000);
+	});
+}
+
 export const getClassifyPapers = () => {
 	return new Promise((resolve, reject) => {
 		setTimeout(() => {

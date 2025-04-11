@@ -16,6 +16,7 @@ const getPreviewList = async () => {
 	paperList.value = await getClassifyPapers();
 }
 getPreviewList();
+
 </script>
 
 <style lang="scss" scoped>

@@ -1,6 +1,6 @@
 <template>
 	<view class="preview">
-		<swiper circular>
+		<swiper :current="currentIndex" circular @change="paperChange">
 			<swiper-item v-for="item in paperList" :key="item.id">
 				<image @click="maskChange" :src="item.img" mode="aspectFill"></image>
 			</swiper-item>
@@ -12,7 +12,7 @@
 				<uni-icons type="back" size="18"></uni-icons>
 			</view>
 			<view class="count">
-				3 / {{paperList.length}}
+				{{currentIndex + 1}} / {{paperList.length}}
 			</view>
 			<view class="time">
 				<uni-dateformat :date="Date.now()" format="hh:mm"></uni-dateformat>
@@ -33,7 +33,7 @@
 						5分
 					</view>
 				</view>
-				<view class="box">
+				<view class="box" @click="downloadPaper">
 					<uni-icons type="download" size="24"></uni-icons>
 					<view class="text">
 						下载
@@ -101,7 +101,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import {getStatusBarHeight} from '../../utils/systemInfo.js';
 import { getPreviewPapers } from '../../mock/home.js';
 
@@ -154,6 +154,71 @@ const submitScore = () => {
 const goBack = () => {
 	uni.navigateBack()
 }
+
+const currentIndex = ref(0);
+const currentPaper = computed(() => {
+	return paperList[currentIndex.value]
+});
+const paperChange = (e) => {
+	currentIndex.value = e.detail.current;
+}
+
+const downloadPaper = () => {
+	// #ifdef H5
+	uni.showModal({
+		content:"请长按保存壁纸",
+		showCancel:false
+	})
+	// #endif
+	// #ifndef H5
+	try {
+		uni.saveImageToPhotosAlbum({
+			filePath:currentPaper.img,
+			success() {
+				uni.showToast({
+					title: '保存成功，请到相册查看',
+					icon:'none'
+				})
+			},
+			fail(err) {
+				if(err.errMsg === 'saveImageToPhotosAlbum:fail cancel') {
+					uni.showToast({
+						title: '保存失败，请重新点击下载',
+						icon: "none"
+					})
+					return;
+				}
+				uni.showModal({
+					title:'授权提示',
+					content:'需要相册保存权限',
+					success(res) {
+						if(res.confirm) {
+							uni.openSetting({
+								success(setting) {
+									if(setting.authSetting['scope.writePhotosAlbum']) {
+										uni.showToast({
+											title: '获取授权成功',
+											icon: 'none'
+										})
+									} else {
+										uni.showToast({
+											title: '获取权限失败',
+											icon: 'none'
+										})
+									}
+								}
+							})
+						}
+					}
+				})
+			}
+		})
+	} catch (error) {
+		//TODO handle the exception
+	}
+	// #endif
+}
+
 </script>
 
 <style lang="scss" scoped>

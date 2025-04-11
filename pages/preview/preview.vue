@@ -104,6 +104,9 @@
 import { computed, ref } from 'vue';
 import {getStatusBarHeight} from '../../utils/systemInfo.js';
 import { getPreviewPapers } from '../../mock/home.js';
+import {
+	onShareAppMessage,onShareTimeline
+} from "@dcloudio/uni-app";
 
 const paperList = ref([])
 const getPreviewList = async () => {
@@ -232,6 +235,22 @@ const downloadPaper = () => {
 	// #endif
 }
 
+//分享给好友
+onShareAppMessage((e)=>{
+	return {
+		title:"我的壁纸",
+		path:"/pages/preview/preview?type=share"
+	}
+})
+
+
+//分享朋友圈
+onShareTimeline(()=>{
+	return {
+		title:"我的壁纸",
+		query:"type=share"
+	}
+})
 </script>
 
 <style lang="scss" scoped>

@@ -53,7 +53,7 @@ const _sfc_main = {
     const userScore = common_vendor.ref(0);
     const submitScore = () => {
       scorePopup.value.close();
-      common_vendor.index.__f__("log", "at pages/preview/preview.vue:150", userScore.value);
+      common_vendor.index.__f__("log", "at pages/preview/preview.vue:153", userScore.value);
     };
     const goBack = () => {
       common_vendor.index.navigateBack();
@@ -124,6 +124,18 @@ const _sfc_main = {
       } catch (error) {
       }
     };
+    common_vendor.onShareAppMessage((e) => {
+      return {
+        title: "我的壁纸",
+        path: "/pages/preview/preview?type=share"
+      };
+    });
+    common_vendor.onShareTimeline(() => {
+      return {
+        title: "我的壁纸",
+        query: "type=share"
+      };
+    });
     return (_ctx, _cache) => {
       return common_vendor.e({
         a: common_vendor.f(paperList.value, (item, k0, i0) => {
@@ -228,5 +240,6 @@ const _sfc_main = {
   }
 };
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-2dad6c07"]]);
+_sfc_main.__runtimeHooks = 6;
 wx.createPage(MiniProgramPage);
 //# sourceMappingURL=../../../.sourcemap/mp-weixin/pages/preview/preview.js.map

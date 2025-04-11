@@ -108,7 +108,7 @@ const getClassifyPapers = () => {
         id: index + 1,
         ...val
       })));
-    }, 1e3);
+    }, 2e3);
   });
 };
 exports.getBannerList = getBannerList;

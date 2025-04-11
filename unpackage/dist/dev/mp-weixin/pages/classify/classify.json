@@ -3,6 +3,7 @@
   "navigationStyle": "custom",
   "usingComponents": {
     "custom-nav-bar": "../../components/custom-nav-bar/custom-nav-bar",
+    "uv-skeletons": "../../uni_modules/uv-skeletons/components/uv-skeletons/uv-skeletons",
     "theme-item": "../../components/theme-item/theme-item"
   }
 }

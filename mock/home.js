@@ -124,6 +124,6 @@ export const getClassifyPapers = () => {
 				id: index+1,
 				...val,
 			})));
-		}, 1000);
+		}, 2000);
 	});
 }
